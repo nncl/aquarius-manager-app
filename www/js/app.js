@@ -1,24 +1,70 @@
-// Ionic Starter App
+/**
+ * @description
+ * Aquarius app module and stuff.
+ */
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+var app = angular.module('aquariusApp', [
+    'ionic',
+    'rzModule'
+]);
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+app.constant('SETTINGS', {
+    "FIREBASE_URL": "https://mobmaisincrivels2.firebaseio.com/"
+});
 
-      // Don't remove this line unless you know what you are doing. It stops the viewport
-      // from snapping when text inputs are focused. Ionic handles this internally for
-      // a much nicer keyboard experience.
-      cordova.plugins.Keyboard.disableScroll(true);
+app.run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+
+            // Don't remove this line unless you know what you are doing. It stops the viewport
+            // from snapping when text inputs are focused. Ionic handles this internally for
+            // a much nicer keyboard experience.
+            cordova.plugins.Keyboard.disableScroll(true);
+        }
+        if (window.StatusBar) {
+            StatusBar.styleDefault();
+        }
+    });
+});
+
+app.controller('AppCtrl', function ($scope) {
+
+    // settings
+    var vm = this;
+
+    vm.phSlider = {
+        minValue: 1,
+        maxValue: 4,
+        currentValue: 14,
+        options: {
+            ceil: 14,
+            step: 1
+        }
+    };
+
+    vm.tempSlider = {
+        minValue: 10,
+        maxValue: 20,
+        currentValue: 32,
+        options: {
+            ceil: 50,
+            step: 1
+        }
+    };
+
+    function update() {
+        console.log('update');
     }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
-})
+
+    // methods
+    $scope.$watch('vm.phSlider.minValue', function (newVal, oldVal) {
+        console.log(newVal, oldVal);
+    });
+
+    $scope.$watch('vm.tempSlider.minValue', function (newVal, oldVal) {
+        console.log(newVal, oldVal);
+    });
+});
