@@ -41,7 +41,10 @@ app.controller('AppCtrl', function ($scope) {
         currentValue: 14,
         options: {
             ceil: 14,
-            step: 1
+            step: 1,
+            onChange: function (p1, minValue, maxValue) {
+                console.log(minValue, maxValue);
+            }
         }
     };
 
@@ -51,20 +54,13 @@ app.controller('AppCtrl', function ($scope) {
         currentValue: 32,
         options: {
             ceil: 50,
-            step: 1
+            step: 1,
+            onChange: function (p1, minValue, maxValue) {
+                console.log(minValue, maxValue);
+            }
         }
     };
 
-    function update() {
-        console.log('update');
-    }
-
     // methods
-    $scope.$watch('vm.phSlider.minValue', function (newVal, oldVal) {
-        console.log(newVal, oldVal);
-    });
-
-    $scope.$watch('vm.tempSlider.minValue', function (newVal, oldVal) {
-        console.log(newVal, oldVal);
-    });
+    // TODO
 });
