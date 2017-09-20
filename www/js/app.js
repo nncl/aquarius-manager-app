@@ -5,6 +5,7 @@
 
 var app = angular.module('aquariusApp', [
     'ionic',
+    'firebase',
     'rzModule'
 ]);
 
@@ -12,7 +13,15 @@ app.constant('SETTINGS', {
     "FIREBASE_URL": "https://mobmaisincrivels2.firebaseio.com/"
 });
 
-app.run(function ($ionicPlatform) {
+app.run(function ($ionicPlatform,
+                  SETTINGS) {
+
+    // Setup firebase app
+    var config = {
+        databaseURL: SETTINGS.FIREBASE_URL
+    };
+    firebase.initializeApp(config);
+
     $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,15 +39,20 @@ app.run(function ($ionicPlatform) {
     });
 });
 
-app.controller('AppCtrl', function ($scope) {
+app.controller('AppCtrl', function ($scope,
+                                    $firebaseObject) {
 
     // settings
-    var vm = this;
+    var vm = this,
+        ref = firebase.database().ref().child('-KtEei-K13DSQCJfSJKd');
+
+    vm.fireData = $firebaseObject(ref);
+    vm.fireData.$bindTo($scope, 'data');
 
     vm.phSlider = {
-        minValue: 1,
-        maxValue: 4,
-        currentValue: 14,
+        minValue: vm.fireData.ph_inicial,
+        maxValue: vm.fireData.ph_final,
+        currentValue: vm.fireData.ph_atual,
         options: {
             ceil: 14,
             step: 1,
@@ -49,9 +63,9 @@ app.controller('AppCtrl', function ($scope) {
     };
 
     vm.tempSlider = {
-        minValue: 10,
-        maxValue: 20,
-        currentValue: 32,
+        minValue: vm.fireData.temp_inicial,
+        maxValue: vm.fireData.temp_final,
+        currentValue: vm.fireData.temp_atual,
         options: {
             ceil: 50,
             step: 1,
@@ -62,5 +76,19 @@ app.controller('AppCtrl', function ($scope) {
     };
 
     // methods
-    // TODO
+    vm.doUpdateValues = function (data) {
+        vm.phSlider.minValue = data.ph_inicial;
+        vm.phSlider.maxValue = data.ph_final;
+        vm.phSlider.currentValue = data.ph_atual;
+
+        vm.tempSlider.minValue = data.temp_inicial;
+        vm.tempSlider.maxValue = data.temp_final;
+        vm.tempSlider.currentValue = data.temp_atual;
+    };
+
+    $scope.$watch('data', function (newVal) {
+        if (newVal) {
+            vm.doUpdateValues(newVal);
+        }
+    });
 });

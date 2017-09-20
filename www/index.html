@@ -27,6 +27,8 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/angularjs-slider/dist/rzslider.min.js"></script>
+    <script src="lib/firebase/firebase.js"></script>
+    <script src="lib/angularfire/dist/angularfire.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -46,7 +48,6 @@
             <h2>Olá</h2>
             <p>Pronto para gerenciar o <strong>PH</strong> e <strong>Temperatura</strong> do seu aquário?</p>
         </header>
-
         <div>
             <div>
                 <h3>PH atual: <strong class="calm" ng-class="{'assertive' : vm.phSlider.currentValue > 11}"
@@ -64,9 +65,10 @@
         <div class="padding-top">
             <div>
                 <h3>Temperatura atual: <strong class="calm" ng-class="{'assertive' : vm.tempSlider.currentValue > 24}"
-                                      ng-bind="vm.tempSlider.currentValue"></strong></h3>
+                                               ng-bind="vm.tempSlider.currentValue"></strong></h3>
 
-                <p>Configure a Temperatura<strong>mínimo</strong> e <strong>máximo</strong>. Quando estiver fora desse range, a
+                <p>Configure a Temperatura<strong>mínimo</strong> e <strong>máximo</strong>. Quando estiver fora desse
+                    range, a
                     gente te avisa :)</p>
             </div>
 
