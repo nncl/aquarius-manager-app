@@ -49,6 +49,8 @@
             <p>Pronto para gerenciar o <strong>PH</strong> e <strong>Temperatura</strong> do seu aquário?</p>
         </header>
 
+        <button class="button button-assertive button-block" ng-click="vm.doSave()">Save</button>
+
         <div class="text-center"
              ng-if="!vm.phSlider.currentValue && !vm.tempSlider.currentValue">
             <ion-spinner></ion-spinner>

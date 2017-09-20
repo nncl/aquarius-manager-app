@@ -91,4 +91,10 @@ app.controller('AppCtrl', function ($scope,
             vm.doUpdateValues(newVal);
         }
     });
+
+    vm.doSave = function () {
+        vm.fireData.ph_inicial = 99;
+        vm.fireData.$save();
+        console.log(vm.fireData);
+    };
 });
