@@ -48,7 +48,13 @@
             <h2>Olá</h2>
             <p>Pronto para gerenciar o <strong>PH</strong> e <strong>Temperatura</strong> do seu aquário?</p>
         </header>
-        <div>
+
+        <div class="text-center"
+             ng-if="!vm.phSlider.currentValue && !vm.tempSlider.currentValue">
+            <ion-spinner></ion-spinner>
+        </div>
+
+        <div ng-if="vm.phSlider.currentValue">
             <div>
                 <h3>PH atual: <strong class="calm" ng-class="{'assertive' : vm.phSlider.currentValue > 11}"
                                       ng-bind="vm.phSlider.currentValue"></strong></h3>
@@ -62,7 +68,8 @@
                       rz-slider-options="vm.phSlider.options"></rzslider>
         </div>
 
-        <div class="padding-top">
+        <div class="padding-top"
+             ng-if="vm.tempSlider.currentValue">
             <div>
                 <h3>Temperatura atual: <strong class="calm" ng-class="{'assertive' : vm.tempSlider.currentValue > 24}"
                                                ng-bind="vm.tempSlider.currentValue"></strong></h3>
