@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "angularjs-slider": "^6.4.0",
-    "angularfire": "^2.3.0"
+    "angularfire": "^2.3.0",
+    "ionic-notification-bar": "^0.3.0"
   }
 }

@@ -1,0 +1,28 @@
+<ion-view title="PH">
+    <ion-content class="padding" ng-controller="AppCtrl as vm">
+
+        <header class="text-center padding-vertical">
+            <p>Pronto para gerenciar o <strong>PH</strong> do seu aquário?</p>
+        </header>
+
+        <div class="text-center"
+             ng-if="!vm.phSlider.currentValue && !vm.tempSlider.currentValue">
+            <ion-spinner></ion-spinner>
+        </div>
+
+        <div ng-if="vm.phSlider.currentValue">
+            <div>
+                <h3>PH atual: <strong class="calm" ng-class="{'assertive' : vm.phSlider.currentValue >= vm.phSlider.maxValue}"
+                                      ng-bind="vm.phSlider.currentValue"></strong></h3>
+
+                <p>Configure o PH <strong>mínimo</strong> e <strong>máximo</strong>. Quando estiver fora desse range, a
+                    gente te avisa :)</p>
+            </div>
+
+            <rzslider rz-slider-model="vm.phSlider.minValue"
+                      rz-slider-high="vm.phSlider.maxValue"
+                      rz-slider-options="vm.phSlider.options"></rzslider>
+        </div>
+
+    </ion-content>
+</ion-view>

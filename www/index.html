@@ -18,6 +18,7 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="lib/angularjs-slider/dist/rzslider.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/ionic-notification-bar/dist/notification-bar.min.css"/>
     <link href="css/style.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -29,6 +30,7 @@
     <script src="lib/angularjs-slider/dist/rzslider.min.js"></script>
     <script src="lib/firebase/firebase.js"></script>
     <script src="lib/angularfire/dist/angularfire.min.js"></script>
+    <script src="lib/ionic-notification-bar/dist/notification-bar.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -38,54 +40,17 @@
 </head>
 <body ng-app="aquariusApp">
 
-<ion-pane>
-    <ion-header-bar class="bar-calm">
-        <h1 class="title">Aquarius Manager</h1>
-    </ion-header-bar>
-    <ion-content ng-controller="AppCtrl as vm"
-                 class="padding">
-        <header class="text-center padding-vertical">
-            <h2>Olá</h2>
-            <p>Pronto para gerenciar o <strong>PH</strong> e <strong>Temperatura</strong> do seu aquário?</p>
-        </header>
+<ion-nav-bar class="bar-calm nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back">
+        Back
+    </ion-nav-back-button>
+</ion-nav-bar>
+<!--
+The views will be rendered in the <ion-nav-view> directive below
+Templates are in the /templates folder (but you could also
+have templates inline in this html file if you'd like).
+-->
+<ion-nav-view></ion-nav-view>
 
-        <button class="button button-assertive button-block" ng-click="vm.doSave()">Save</button>
-
-        <div class="text-center"
-             ng-if="!vm.phSlider.currentValue && !vm.tempSlider.currentValue">
-            <ion-spinner></ion-spinner>
-        </div>
-
-        <div ng-if="vm.phSlider.currentValue">
-            <div>
-                <h3>PH atual: <strong class="calm" ng-class="{'assertive' : vm.phSlider.currentValue > 11}"
-                                      ng-bind="vm.phSlider.currentValue"></strong></h3>
-
-                <p>Configure o PH <strong>mínimo</strong> e <strong>máximo</strong>. Quando estiver fora desse range, a
-                    gente te avisa :)</p>
-            </div>
-
-            <rzslider rz-slider-model="vm.phSlider.minValue"
-                      rz-slider-high="vm.phSlider.maxValue"
-                      rz-slider-options="vm.phSlider.options"></rzslider>
-        </div>
-
-        <div class="padding-top"
-             ng-if="vm.tempSlider.currentValue">
-            <div>
-                <h3>Temperatura atual: <strong class="calm" ng-class="{'assertive' : vm.tempSlider.currentValue > 24}"
-                                               ng-bind="vm.tempSlider.currentValue"></strong></h3>
-
-                <p>Configure a Temperatura<strong>mínimo</strong> e <strong>máximo</strong>. Quando estiver fora desse
-                    range, a
-                    gente te avisa :)</p>
-            </div>
-
-            <rzslider rz-slider-model="vm.tempSlider.minValue"
-                      rz-slider-high="vm.tempSlider.maxValue"
-                      rz-slider-options="vm.tempSlider.options"></rzslider>
-        </div>
-    </ion-content>
-</ion-pane>
 </body>
 </html>

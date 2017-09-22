@@ -1,0 +1,30 @@
+<ion-view title="Temperatura">
+    <ion-content class="padding" ng-controller="AppCtrl as vm">
+
+        <header class="text-center padding-vertical">
+            <p>Pronto para gerenciar a <strong>Temperatura</strong> do seu aquário?</p>
+        </header>
+
+        <div class="text-center"
+             ng-if="!vm.phSlider.currentValue && !vm.tempSlider.currentValue">
+            <ion-spinner></ion-spinner>
+        </div>
+
+        <div class="padding-top"
+             ng-if="vm.tempSlider.currentValue">
+            <div>
+                <h3>Temperatura atual: <strong class="calm" ng-class="{'assertive' : vm.tempSlider.currentValue >= vm.tempSlider.maxValue}"
+                                               ng-bind="vm.tempSlider.currentValue"></strong></h3>
+
+                <p>Configure a Temperatura <strong>mínima</strong> e <strong>máximo</strong>. Quando estiver fora desse
+                    range, a
+                    gente te avisa :)</p>
+            </div>
+
+            <rzslider rz-slider-model="vm.tempSlider.minValue"
+                      rz-slider-high="vm.tempSlider.maxValue"
+                      rz-slider-options="vm.tempSlider.options"></rzslider>
+        </div>
+
+    </ion-content>
+</ion-view>

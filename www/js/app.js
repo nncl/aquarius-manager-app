@@ -6,11 +6,58 @@
 var app = angular.module('aquariusApp', [
     'ionic',
     'firebase',
+    'ionic-notification-bar',
     'rzModule'
 ]);
 
 app.constant('SETTINGS', {
-    "FIREBASE_URL": "https://mobmaisincrivels2.firebaseio.com/"
+    "FIREBASE_URL": "https://mobmaisincrivels2.firebaseio.com/",
+    "FIREBASE_CHILD": "-KtEei-K13DSQCJfSJKd"
+});
+
+app.config(function ($stateProvider, $urlRouterProvider) {
+
+    $stateProvider
+
+    // setup an abstract state for the tabs directive
+        .state('tab', {
+            url: "/tab",
+            abstract: true,
+            templateUrl: "templates/tabs.html"
+        })
+
+        .state('tab.ph', {
+            url: '/ph',
+            views: {
+                'tab-ph': {
+                    templateUrl: 'templates/tab-ph.html'
+                }
+            }
+        })
+
+        .state('tab.temperature', {
+            url: '/temperatura',
+            views: {
+                'tab-temperature': {
+                    templateUrl: 'templates/tab-temperature.html'
+                }
+            }
+        })
+
+        .state('tab.about', {
+            url: '/sobre',
+            views: {
+                'tab-about': {
+                    templateUrl: 'templates/tab-about.html'
+                }
+            }
+        })
+
+    ;
+
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/tab/ph');
+
 });
 
 app.run(function ($ionicPlatform,
@@ -40,11 +87,13 @@ app.run(function ($ionicPlatform,
 });
 
 app.controller('AppCtrl', function ($scope,
-                                    $firebaseObject) {
+                                    $firebaseObject,
+                                    $notificationBar,
+                                    SETTINGS) {
 
     // settings
     var vm = this,
-        ref = firebase.database().ref().child('-KtEei-K13DSQCJfSJKd');
+        ref = firebase.database().ref().child(SETTINGS.FIREBASE_CHILD);
 
     vm.fireData = $firebaseObject(ref);
     vm.fireData.$bindTo($scope, 'data');
@@ -57,7 +106,11 @@ app.controller('AppCtrl', function ($scope,
             ceil: 14,
             step: 1,
             onChange: function (p1, minValue, maxValue) {
-                console.log(minValue, maxValue);
+                vm.fireData.ph_inicial = minValue;
+                vm.fireData.ph_final = maxValue;
+                vm.fireData.$save();
+
+                $notificationBar.show('Atualizado com sucesso!!', $notificationBar.SUCCESS);
             }
         }
     };
@@ -70,7 +123,9 @@ app.controller('AppCtrl', function ($scope,
             ceil: 50,
             step: 1,
             onChange: function (p1, minValue, maxValue) {
-                console.log(minValue, maxValue);
+                vm.fireData.temp_inicial = minValue;
+                vm.fireData.temp_final = maxValue;
+                vm.fireData.$save();
             }
         }
     };
@@ -94,7 +149,7 @@ app.controller('AppCtrl', function ($scope,
 
     vm.doSave = function () {
         vm.fireData.ph_inicial = 99;
+
         vm.fireData.$save();
-        console.log(vm.fireData);
     };
 });
