@@ -98,6 +98,10 @@ app.controller('AppCtrl', function ($scope,
     vm.fireData = $firebaseObject(ref);
     vm.fireData.$bindTo($scope, 'data');
 
+    function doNotify() {
+        $notificationBar.show('Atualizado com sucesso!!', $notificationBar.SUCCESS);
+    }
+
     vm.phSlider = {
         minValue: vm.fireData.ph_inicial,
         maxValue: vm.fireData.ph_final,
@@ -110,7 +114,7 @@ app.controller('AppCtrl', function ($scope,
                 vm.fireData.ph_final = maxValue;
                 vm.fireData.$save();
 
-                $notificationBar.show('Atualizado com sucesso!!', $notificationBar.SUCCESS);
+                doNotify();
             }
         }
     };
@@ -126,6 +130,8 @@ app.controller('AppCtrl', function ($scope,
                 vm.fireData.temp_inicial = minValue;
                 vm.fireData.temp_final = maxValue;
                 vm.fireData.$save();
+
+                doNotify();
             }
         }
     };
