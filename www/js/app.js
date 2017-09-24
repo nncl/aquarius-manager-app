@@ -12,7 +12,9 @@ var app = angular.module('aquariusApp', [
 
 app.constant('SETTINGS', {
     "FIREBASE_URL": "https://mobmaisincrivels2.firebaseio.com/",
-    "FIREBASE_CHILD": "-KtEei-K13DSQCJfSJKd"
+    "FIREBASE_CHILD": "-KtEei-K13DSQCJfSJKd",
+    "ONESIGNAL_APP_ID": "229fe8d6-53e3-400c-a3c6-ac46fd5ba337",
+    "DEVICE_ONLY": true // if true, cordova stuff won't run on browsers
 });
 
 app.config(function ($stateProvider, $urlRouterProvider) {
@@ -61,6 +63,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 app.run(function ($ionicPlatform,
+                  NotificationService,
                   SETTINGS) {
 
     // Setup firebase app
@@ -82,6 +85,10 @@ app.run(function ($ionicPlatform,
         }
         if (window.StatusBar) {
             StatusBar.styleDefault();
+        }
+
+        if (SETTINGS.DEVICE_ONLY) {
+            NotificationService.doInit();
         }
     });
 });
@@ -158,4 +165,20 @@ app.controller('AppCtrl', function ($scope,
 
         vm.fireData.$save();
     };
+});
+
+app.service('NotificationService', function (SETTINGS) {
+    var self = {
+        'notificationOpenedCallback': function (jsonData) {
+            console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+        },
+        'doInit': function () {
+            window.plugins.OneSignal
+                .startInit(SETTINGS.ONESIGNAL_APP_ID)
+                .handleNotificationOpened(self.notificationOpenedCallback)
+                .endInit();
+        }
+    };
+
+    return self;
 });
