@@ -1,6 +1,6 @@
 {
     "name": "aquarius-manager-app",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "An Ionic project",
     "devDependencies": {
         "gulp": "^3.5.6",
