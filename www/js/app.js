@@ -11,10 +11,10 @@ var app = angular.module('aquariusApp', [
 ]);
 
 app.constant('SETTINGS', {
-    "FIREBASE_URL": "https://mobmaisincrivels2.firebaseio.com/",
-    "FIREBASE_CHILD": "-KtEei-K13DSQCJfSJKd",
-    "ONESIGNAL_APP_ID": "229fe8d6-53e3-400c-a3c6-ac46fd5ba337",
-    "DEVICE_ONLY": true // if true, cordova stuff won't run on browsers
+    "FIREBASE_URL": "",
+    "FIREBASE_CHILD": "",
+    "ONESIGNAL_APP_ID": "",
+    "DEVICE_ONLY": true
 });
 
 app.config(function ($stateProvider, $urlRouterProvider) {
